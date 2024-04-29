@@ -1,11 +1,11 @@
 package com.treinamento.crud.controllers;
 
+import com.treinamento.crud.model.dto.ClienteDTO;
 import com.treinamento.crud.model.entity.TesteCliente;
 import com.treinamento.crud.services.TesteClienteService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,5 +18,22 @@ public class TesteClienteController {
     @GetMapping
     public List<TesteCliente> getCliente(){
         return testeClienteService.findCliente();
+    }
+
+    @PostMapping
+    public void postCliente(@RequestBody ClienteDTO dto){
+        testeClienteService.cadastrarCliente(dto);
+    }
+
+    @PutMapping
+    @Transactional
+    public void putCliente(@RequestBody ClienteDTO dto){
+        testeClienteService.atualizarCliente(dto);
+    }
+
+    @DeleteMapping("{cpf}")
+    @Transactional
+    public void deleteCliente(@PathVariable String cpf){
+        testeClienteService.deletarCliente(cpf);
     }
 }
